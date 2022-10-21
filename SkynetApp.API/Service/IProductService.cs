@@ -1,6 +1,6 @@
 ﻿namespace SkynetApp.API.Service
 {
-    public interface IProduct
+    public interface IProductService
     {
         public string GetAllProducts();
     }
