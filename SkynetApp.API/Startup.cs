@@ -11,6 +11,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using SkynetApp.API.Data;
+using SkynetApp.API.Middleware;
+using SkynetApp.API.Repository;
+using SkynetApp.API.Service;
 
 namespace SkynetApp.API
 {
@@ -26,7 +30,11 @@ namespace SkynetApp.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            // services.AddTransient<SkynetDbContext>()
+          
+            services.AddScoped<SkynetDbContext>();
+            /// Transient -> every time new object 
+            services.AddScoped<IProductService, ProductRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -37,6 +45,7 @@ namespace SkynetApp.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+          //app.UseMiddleware<ErrorMiddleware>();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

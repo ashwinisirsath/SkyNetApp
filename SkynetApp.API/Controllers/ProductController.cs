@@ -1,5 +1,6 @@
 ﻿using SkynetApp.API.Service;
 using Microsoft.AspNetCore.Mvc;
+using SkynetApp.API.Models;
 
 namespace SkynetApp.API.Controllers
 {
@@ -13,9 +14,18 @@ namespace SkynetApp.API.Controllers
             _product = product;
         }
 
-        [HttpGet ("Products")]
-        public string GetallProducts()
+        [HttpGet("Products")]
+        public async Task<IEnumerable<Product>> GetallProducts()
         {
-            return _product.GetAllProducts();
+           
+           return  await _product.GetAllProducts();
+          
+        }
+        [HttpGet("product")]
+        public async Task<IActionResult> GetProduct(int id)
+        {
+            var res = await _product.GetProduct(id);
+            return Ok(res);
+        }
     }
 }
